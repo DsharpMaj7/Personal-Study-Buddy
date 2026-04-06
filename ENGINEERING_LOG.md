@@ -22,7 +22,7 @@
 **The Fix:** Refactored to use `useState` for binary flip tracking.
 **UX Rule:** Added a `resetOnNext` pattern to ensure cards always default to "Front" when navigating.
 
-### 🔗 The URL Input Rollback
+### [2026-04-05] 🔗 The URL Input Rollback
 **The Issue:** Passing a raw URL directly to Gemini produced convincing but unrelated outputs, because the model was not actually reading the linked content.
 
 **The Decision:** Removed URL mode from the product for now rather than exposing a misleading feature.
