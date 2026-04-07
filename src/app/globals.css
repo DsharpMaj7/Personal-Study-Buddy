@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-slate-950 text-slate-50 antialiased;
+}
+
+.glass-panel {
+  @apply rounded-2xl border border-slate-600/40 bg-slate-900/50 p-7 shadow-xl;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* Inputs */
+.input-soft {
+  @apply min-h-[42px] rounded-lg border border-slate-700 bg-slate-900 px-3 py-3 text-sm outline-none transition-shadow;
+}
+
+.input-soft:focus {
+  @apply border-brand-500 outline-none;
+  box-shadow: 0 0 0 1px rgb(99 102 241);
+}
+
+/* Primary button */
+.btn-primary {
+  @apply inline-flex items-center justify-center rounded-lg bg-brand-600 px-4 py-2.5 text-sm font-medium text-white shadow-md transition-all;
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.4);
+}
+
+.btn-primary:hover:not(:disabled) {
+  @apply bg-brand-500;
+  box-shadow: 0 4px 20px rgba(79, 70, 229, 0.5);
+}
+
+.btn-primary:disabled {
+  @apply cursor-not-allowed opacity-60;
+}
+
+/* Secondary / outline button */
+.btn-secondary {
+  @apply inline-flex items-center justify-center rounded-lg border border-slate-700 bg-slate-900 px-4 py-2.5 text-sm font-medium transition-all;
+  color: #e2e8f0;
+}
+
+.btn-secondary:hover {
+  @apply border-brand-500;
+  color: #e0e7ff;
+}
+
+/* Tag/chip style */
+.tag-soft {
+  @apply rounded-full bg-slate-800 px-2.5 py-0.5 text-xs text-slate-200;
+}
+
+/* Collapsible section */
+.details-soft {
+  @apply rounded-lg border border-slate-800 bg-slate-950/60 px-4 py-3;
+}
