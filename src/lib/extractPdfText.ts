@@ -1,27 +1,36 @@
 import "server-only";
+import { getDocument } from "pdfjs-dist/legacy/build/pdf.mjs";
 
-/**
- * PDF parsing runs only on the server.
- */
 export async function extractTextFromPdfBuffer(buffer: Buffer): Promise<string> {
   try {
-    console.log("PDF parse start, buffer length:", buffer.length);
+    const data = new Uint8Array(buffer);
+    const pdf = await getDocument({ data }).promise;
 
-    const mod = await import("pdf-parse");
-    console.log("Imported pdf-parse module keys:", Object.keys(mod));
+    const pages: string[] = [];
 
-    const pdfParse = (mod as any).default ?? mod;
-    const result = await pdfParse(buffer);
+    for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+      const page = await pdf.getPage(pageNum);
+      const textContent = await page.getTextContent();
 
-    console.log("PDF parse result keys:", Object.keys(result || {}));
+      const pageText = textContent.items
+        .map((item: any) => ("str" in item ? item.str : ""))
+        .join(" ");
 
-    if (!result?.text?.trim()) {
+      pages.push(pageText);
+    }
+
+    const text = pages.join("\n\n").trim();
+
+    if (!text) {
       throw new Error("No text extracted from PDF.");
     }
 
-    return result.text;
+    return text;
   } catch (err) {
     console.error("PDF parse failed:", err);
-    throw new Error("Could not extract text from this PDF. It may be image-only (scanned) or protected.");
+    throw new Error(
+      "Could not extract text from this PDF. It may be image-only (scanned) or protected."
+    );
   }
 }
+
